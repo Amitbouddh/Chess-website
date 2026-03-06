@@ -508,6 +508,55 @@
       border: 1px solid var(--loss-text);
     }
 
+    /* === QR COMMUNITY SECTION === */
+    .community-section {
+      margin-bottom: 5rem;
+    }
+
+    .qr-card {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, #1a1a1f 100%);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .qr-content h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .qr-content p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 450px;
+      margin-bottom: 1.5rem;
+    }
+
+    .qr-image-container {
+      background: #25D366; /* WhatsApp Green to match your image vibe */
+      padding: 0.5rem;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.2);
+    }
+
+    .qr-image-container img {
+      width: 200px;
+      height: auto;
+      border-radius: 16px;
+      display: block;
+    }
+
     .footer {
       padding: 2rem 0;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -531,6 +580,8 @@
       .form-card { padding: 2rem; }
       .form-header h2 { font-size: 2rem; }
       .form-grid { grid-template-columns: 1fr; }
+      .qr-card { padding: 2rem; flex-direction: column; text-align: center; align-items: center; }
+      .qr-content p { margin: 0 auto 1.5rem; }
     }
   </style>
 </head>
@@ -691,7 +742,6 @@
       </div>
     </section>
 
-    <!-- === REGISTRATION FORM SECTION === -->
     <section id="register" class="registration-section">
       <div class="section-title">
         <i>📝</i> Tournament Registration
@@ -776,6 +826,22 @@
       </div>
     </section>
 
+    <section id="community" class="community-section">
+      <div class="section-title">
+        <i>💬</i> Join the Community
+      </div>
+      
+      <div class="qr-card">
+        <div class="qr-content">
+          <h3>General WhatsApp Group</h3>
+          <p>Scan the QR code to join the official CHECKMATE WhatsApp group. Connect with other players, get live updates, and discuss strategies.</p>
+        </div>
+        <div class="qr-image-container">
+          <img src="whatsapp-qr.jpg" alt="Join General WhatsApp Group" class="qr-code-img">
+        </div>
+      </div>
+    </section>
+
     <footer class="footer">
       <div>© 2026 <strong>CHECKMATE</strong></div>
       <div class="tournament-tag">Designed by Amit Bouddh</div>
@@ -785,7 +851,6 @@
   </div>
 
   <script>
-    // ⚠️ IMPORTANT: Yahan apna Google Apps Script Web App URL paste karo
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvYKd3dmRcmxLQMp6tNnSzB5f6t83Ag1MIpPLhK2AH6hRdMnHlSG1iYY9ZE_q1cfWa/exec";
 
     document.getElementById('registrationForm').addEventListener('submit', async function(e) {
@@ -794,12 +859,10 @@
       const submitBtn = document.getElementById('submitBtn');
       const messageDiv = document.getElementById('formMessage');
       
-      // Button disable karo aur loading state dikhao
       submitBtn.disabled = true;
       submitBtn.textContent = '⏳ Submitting...';
       messageDiv.style.display = 'none';
       
-      // Form data collect karo
       const formData = {
         name: e.target.name.value,
         email: e.target.email.value,
@@ -809,43 +872,36 @@
       };
       
       try {
-        // Google Apps Script ko data bhejo
         const response = await fetch(SCRIPT_URL, {
           method: 'POST',
-          mode: 'no-cors', // Important for Google Apps Script
+          mode: 'no-cors',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(formData)
         });
         
-        // Success message dikhao
         messageDiv.className = 'form-message success';
         messageDiv.textContent = '✅ Registration Successful! Welcome to CHECKMATE Collectives!';
         messageDiv.style.display = 'block';
         
-        // Form reset karo
         e.target.reset();
         
-        // 3 seconds baad message hide karo
         setTimeout(() => {
           messageDiv.style.display = 'none';
         }, 5000);
         
       } catch (error) {
-        // Error message dikhao
         messageDiv.className = 'form-message error';
         messageDiv.textContent = '❌ Registration Failed. Please try again.';
         messageDiv.style.display = 'block';
         console.error('Error:', error);
       } finally {
-        // Button wapas enable karo
         submitBtn.disabled = false;
         submitBtn.textContent = '⚔️ REGISTER NOW';
       }
     });
 
-    // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -861,6 +917,3 @@
   </script>
 </body>
 </html>
-
-
-
